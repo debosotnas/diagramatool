@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'diagramatool';
+
+  text = 'this is the first word of a common declaration. Here you can put some content to show in main screen';
+
+
 }

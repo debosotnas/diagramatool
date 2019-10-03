@@ -1,0 +1,4 @@
+<button mat-raised-button color="primary" (click)="dragPhrase=!dragPhrase">Activate</button>
+<div cdkDrag [cdkDragDisabled]="dragPhrase" class="ppp">
+  <app-simple-word *ngFor="let simpleWord of allWords" [word]="simpleWord"></app-simple-word>
+</div>

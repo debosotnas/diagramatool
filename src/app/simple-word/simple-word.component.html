@@ -1,0 +1,7 @@
+<span cdkDrag
+  cdkDragBoundary=".main-drag-container"
+  [cdkDragConstrainPosition]="constrainPosition"
+  (cdkDragEnded)="fnDragEnded($event)"
+  (cdkDragStarted)="fnDragStarted($event)"
+  (cdkDragReleased)="fnReleased($event)"
+  class="drag-word mono-font">{{word}}</span>
