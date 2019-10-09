@@ -1,4 +1,21 @@
 <button mat-raised-button color="primary" (click)="dragPhrase=!dragPhrase">Activate</button>
-<div cdkDrag [cdkDragDisabled]="dragPhrase" class="ppp">
-  <app-simple-word *ngFor="let simpleWord of allWords" [word]="simpleWord"></app-simple-word>
+<div class="main-drag-container">
+  <div cdkDrag [cdkDragDisabled]="dragPhrase" class="full-phrase">
+    <app-simple-word 
+      *ngFor="let simpleWord of dragListWords"
+      [notify]="simpleWord.notify"
+
+      [id]="simpleWord.id"
+      [word]="simpleWord.word"
+      [parentLine]="simpleWord.parentLine"
+      [xPos]="simpleWord.x"
+      [yPos]="simpleWord.y"
+      [isLastChild]="simpleWord.isLastChild"
+      [dragPosition]="simpleWord.dragPosition"
+      (startWordDrag)="startWordDragging($event)"
+      (endWordDrag)="endWordDragging($event)"
+      (updateWordDrag)="updateWordDragging($event)"
+      (updateAfterClearGroup)="updateOnClearGroup($event)"
+      ></app-simple-word>
+  </div>
 </div>

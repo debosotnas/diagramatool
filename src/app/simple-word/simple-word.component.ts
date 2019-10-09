@@ -1,56 +1,243 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Point, DragRef } from '@angular/cdk/drag-drop/typings/drag-ref';
 import { CdkDragStart, CdkDragEnd, CdkDragRelease } from '@angular/cdk/drag-drop';
+// import { Observable, Subscription } from 'rxjs';
 
-const JUMP_DISTANCE = 30;
+import { DragListItem, Notifier } from '../types/drag-list-item.type';
+import { DragWordEvent } from '../types/events.type';
+import { JUMP_X_DISTANCE, JUMP_Y_DISTANCE, SPACER_BETWEEN_WORDS } from '../types/constants';
+import { WordFacade } from '../state/facades/word.facade';
+import { Subscription } from 'rxjs';
+import { WordWidthItem } from '../types/word-width-item.type';
+
+const mainThisComponent: any = {};
 
 @Component({
   selector: 'app-simple-word',
   templateUrl: './simple-word.component.html',
   styleUrls: ['./simple-word.component.sass']
 })
-export class SimpleWordComponent implements OnInit {
+export class SimpleWordComponent implements OnInit, OnDestroy  {
 
+  @Input() notify = new Notifier();
+
+  // @Input() dragWord: DragListItem;
+  @Input() id: number;
   @Input() word: string;
+  @Input() parentLine: number;
+  @Input() xPos: number;
+  @Input() yPos: number;
+  @Input() isLastChild: boolean;
 
-  constructor() { }
+  @Output() startWordDrag: EventEmitter<DragWordEvent> = new EventEmitter<DragWordEvent>();
+  @Output() endWordDrag: EventEmitter<DragWordEvent> = new EventEmitter<DragWordEvent>();
+  @Output() updateWordDrag: EventEmitter<DragWordEvent> = new EventEmitter<DragWordEvent>();
+  @Output() updateAfterClearGroup = new EventEmitter<DragWordEvent>();
+
+  @Input() dragPosition: Point = {x: 0, y: 0};
+
+  subscriptions: Subscription[] = [];
+  wordWidthItems: WordWidthItem[];
+
+  constructor(private wordFacade: WordFacade) { }
 
   ngOnInit() {
+    // fix for loosing bind on 'constrainPosition' and other cdkDrag methods
+    mainThisComponent[this.id] = this;
+
+    this.notify.valueChanged = (wordDrag: DragListItem) => {
+      // console.log(`Parent changes to ${wordDrag.id} -- word: ${this.word}`);
+      // this.dragPosition.x = wordDrag.x;
+      // this.dragPosition.y = wordDrag.y;
+      // console.log(' value changed!!!: ', wordDrag);
+      // this.dragPosition = {x: this.xPos, y: (wordDrag.y - 87)};
+      // this.dragPosition = {x: this.xPos, y: wordDrag.y };
+
+/*
+      let sumWidth = wordDrag.x;
+      const wordWidthSubGroup: WordWidthItem[] = this.wordWidthItems
+                                    .filter(item => item.id >= wordDrag.id && item.id < this.id);
+      if (wordWidthSubGroup.length) {
+        wordWidthSubGroup.map(item => sumWidth += item.width + SPACER_BETWEEN_WORDS);
+      }
+*/
+      // console.log('wordWidthSubGroup: ', wordWidthSubGroup);
+
+      // this.dragPosition = {x: sumWidth, y: wordDrag.y };
+      this.dragPosition = {x: wordDrag.x, y: wordDrag.y };
+    };
+
+    // this.wordFacade.wordsWidth$.subscribe((data) => {
+    this.subscriptions.push(
+      this.wordFacade.wordsWidth$.subscribe((data) => {
+        // console.log('>>>> ID: ' , this.id , ' - data: ', data);
+        this.wordWidthItems = data;
+      })
+    );
+
+    // this.dragPosition = {x: this.id * 20, y: 0 };
+
+    /* this.subscription = this.currDragItem$.subscribe((dataItem: DragListItem) => {
+      if (dataItem) {
+        console.log('>>> ', dataItem.word);
+      } else {
+        console.log('dataItem in word component is UNDEFINED');
+      }
+    }); */
+
+  }
+
+  changePosition() {
+    // this.dragPosition = {x: this.dragPosition.x + 50, y: this.dragPosition.y + 50};
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  // Weird behavior / Bug: DragMoved needed to call 'valueChanged' and update
+  fnDragMoved(evt: CdkDragEnd) { }
+
+  checkUpdateCurrPos(updateXPos, updateYPos) {
+    /* if (this.currentPosition.x !== updateXPos || this.currentPosition.y !== updateYPos) {
+      this.currentPosition.x = updateXPos;
+      this.currentPosition.y = updateYPos;
+      */
+/*
+    if (this.dragWord.x !== updateXPos || this.dragWord.y !== updateYPos) {
+      this.dragWord.x = updateXPos;
+      this.dragWord.y = updateYPos;
+
+      this.updateWordDrag.emit({
+        word: this.dragWord.word,
+        id: this.dragWord.id,
+        currParentLine: this.dragWord.parentLine,
+        currX: updateXPos,
+        currY: updateYPos
+      });
+*/
+    if (this.xPos !== updateXPos || this.yPos !== updateYPos) {
+      this.xPos = updateXPos;
+      this.yPos = updateYPos;
+
+      // console.log('> Word Pos will emit Updated!');
+
+      this.updateWordDrag.emit({
+        word: this.word,
+        id: this.id,
+        currParentLine: this.parentLine,
+        currX: this.xPos,
+        currY: this.yPos,
+        isLastChild: this.isLastChild
+      });
+
+    }
   }
 
   fnReleased(evt: CdkDragRelease): void {
     // evt.source._dragRef.setFreeDragPosition({ x: 100, y: 100});
+
   }
 
   fnDragEnded(evt: CdkDragEnd): void {
     // evt.source._dragRef.setFreeDragPosition(tmpPlusPoint);
+    /*
+    this.endWordDrag.emit({
+      word: this.dragWord.word,
+      id: this.dragWord.id,
+      currParentLine: this.dragWord.parentLine,
+      currX: this.dragWord.x,
+      currY: this.dragWord.y
+    });
+    */
+
+    // ok
+    /*
+    this.updateWordDrag.emit({
+      word: this.word,
+      id: this.id,
+      currParentLine: this.parentLine,
+      currX: this.xPos,
+      currY: this.yPos
+    });
+    */
+
+    this.endWordDrag.emit({
+      word: this.word,
+      id: this.id,
+      currParentLine: this.parentLine,
+      currX: this.xPos,
+      currY: this.yPos,
+      isLastChild: this.isLastChild
+    });
+
   }
 
   fnDragStarted(evt: CdkDragStart): void {
     // evt.source._dragRef.setFreeDragPosition({ x: 100, y: 100});
+    // ok
+
+    this.startWordDrag.emit({
+      word: this.word,
+      id: this.id,
+      currParentLine: this.parentLine,
+      currX: this.xPos,
+      currY: this.yPos,
+      isLastChild: this.isLastChild
+    });
+
+
+
+    /*
+    this.startWordDrag.emit({
+      word: this.dragWord.word,
+      id: this.dragWord.id,
+      currParentLine: this.dragWord.parentLine,
+      currX: this.dragWord.x,
+      currY: this.dragWord.y
+    });
+    */
   }
 
   constrainPosition(point: Point, dragRef: DragRef): Point {
     const thisAsAny = (this as any);
+    const dragRefAsAny = (dragRef as any);
+
+    // console.log('active Drag - transform: ', dragRefAsAny._activeTransform);
+    const boundaryRect = thisAsAny._boundaryRect;
 
     const offsetXmouse = thisAsAny._pickupPositionOnPage.x - thisAsAny._previewRect.x;
     const offsetYmouse = thisAsAny._pickupPositionOnPage.y - thisAsAny._previewRect.y;
 
-    // console.log(`offsetX: ${offsetXmouse} - offsetY: ${offsetYmouse}`);
+    const preDistX = Math.round((point.x - offsetXmouse) / JUMP_X_DISTANCE) * JUMP_X_DISTANCE;
+    const preDistY = Math.round((point.y - offsetYmouse) / JUMP_Y_DISTANCE) * JUMP_Y_DISTANCE;
 
-    const baseCalcX = point.x - offsetXmouse;
-    const baseCalcY = point.y - offsetYmouse;
+    const updateXPos = Math.round(preDistX + offsetXmouse);
+    const updateYPos = Math.round(preDistY + offsetYmouse);
 
-    const preDistX = Math.round(baseCalcX / JUMP_DISTANCE) * JUMP_DISTANCE;
-    const preDistY = Math.round(baseCalcY / JUMP_DISTANCE) * JUMP_DISTANCE;
-
-    const distX = preDistX + offsetXmouse;
-    const distY = preDistY + offsetYmouse;
+    mainThisComponent[dragRef.data.data]
+      .checkUpdateCurrPos(dragRefAsAny._activeTransform.x, dragRefAsAny._activeTransform.y);
 
     return {
-      x: distX,
-      y: distY
+      x: updateXPos,
+      y: updateYPos
     };
+  }
+
+  removeNextGroup(): void {
+    this.wordFacade.clearLastChildOfGroup(this.id);
+
+    setTimeout(() => {
+      this.updateAfterClearGroup.emit({
+        word: this.word,
+        id: this.id,
+        currParentLine: this.parentLine,
+        currX: this.dragPosition.x,
+        currY: this.dragPosition.y,
+        isLastChild: this.isLastChild
+      });
+    }, 10);
+
   }
 
 }

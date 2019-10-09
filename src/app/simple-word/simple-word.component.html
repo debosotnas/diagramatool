@@ -1,7 +1,12 @@
 <span cdkDrag
   cdkDragBoundary=".main-drag-container"
+  [cdkDragFreeDragPosition]="dragPosition"
   [cdkDragConstrainPosition]="constrainPosition"
+  [cdkDragData]="id"
   (cdkDragEnded)="fnDragEnded($event)"
   (cdkDragStarted)="fnDragStarted($event)"
   (cdkDragReleased)="fnReleased($event)"
-  class="drag-word mono-font">{{word}}</span>
+  (cdkDragMoved)="fnDragMoved($event)"
+  appWordWidth
+  [wordWidthId]="id"
+  class="drag-word mono-font">{{word}}<span *ngIf="isLastChild" (click)="removeNextGroup()" class="isLastChild">*</span></span>
