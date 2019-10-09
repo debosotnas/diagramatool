@@ -21,14 +21,6 @@ export class WordFacade {
 
   constructor(private store: Store<AppWordState>) { }
 
-  /*
-  updatePositionGroupWords(currDragItem: DragListItem): void {
-    console.log('Facade: currDragItem:: ', currDragItem);
-    const www = new WordActions.UpdateWordPosition(currDragItem);
-    this.store.dispatch(www);
-  }
-  */
-
   saveWordWidthById(id: number, width: number): void {
     this.store.dispatch(new WordActions.SaveWordWidth({ id, width }));
   }

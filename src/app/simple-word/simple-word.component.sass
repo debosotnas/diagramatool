@@ -3,12 +3,21 @@ span.drag-word
   display: inline-block
   cursor: pointer
   font-size: 15px
-  background-color: #f003
   height: 30px
+  position: relative
 
 span.isLastChild
+  position: absolute
+  top: -3px
+  right: -16px
   font-weight: bold
-  font-size: 15px
   display: inline-block
-  color: #f90
+  color: #d6d6d6
   cursor: pointer
+  mat-icon
+    font-size: 12px
+    width: 15px
+    height: 15px
+
+span.isLastChild:hover
+  color: #f90

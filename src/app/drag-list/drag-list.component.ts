@@ -11,8 +11,6 @@ import { Subscription } from 'rxjs';
 })
 export class DragListComponent implements OnInit, OnDestroy {
 
-  // notify = new Notifier();
-
   @Input() text: string;
 
   subscriptions: Subscription[] = [];
@@ -24,7 +22,6 @@ export class DragListComponent implements OnInit, OnDestroy {
   constructor(private wordFacade: WordFacade) { }
 
   ngOnInit() {
-    console.log('>>> check duplicated!!!!');
     this.allWords = this.text.split(' ');
     let localId = 1;
 
@@ -40,7 +37,6 @@ export class DragListComponent implements OnInit, OnDestroy {
         isLastChild: false
       };
     });
-    // console.log('initListWords: ', initListWords);
 
     this.subscriptions.push(
       this.wordFacade.wordsList$.subscribe((data) => {
@@ -57,7 +53,6 @@ export class DragListComponent implements OnInit, OnDestroy {
   }
 
   startWordDragging(evt: DragWordEvent): void {
-    console.log('!!!!!---- start word dragging - EVT: ', evt);
     this.wordFacade.createParentLineGroup({
       id: evt.id,
       currParentLine: evt.currParentLine
@@ -65,14 +60,10 @@ export class DragListComponent implements OnInit, OnDestroy {
   }
 
   endWordDragging(evt: DragWordEvent): void {
-    console.log('End word draging: ', evt);
     this.wordFacade.setLastChildOfGroup(evt.id);
   }
 
   updateOnClearGroup(evt: DragWordEvent): void {
-//    const word: DragListItem = this.dragListWords.find(w => w.id === evt.id);
-//    evt.currX = word.x;
-//    evt.currY = word.y;
     this.updateWordDragging(evt, true);
   }
 
@@ -86,31 +77,9 @@ export class DragListComponent implements OnInit, OnDestroy {
     if (!evt.currX && !evt.currY && !isClearGroup) {
       return;
     }
-    // console.log(`-------> ${evt.id} / currPosX: ${evt.currX} / currPosY: ${evt.currY}`);
-
-
-    /*
-    this.wordFacade.updatePositionGroupWords({
-      word: evt.word,
-      id: evt.id,
-      parentLine: evt.currParentLine,
-      x: evt.currX,
-      y: evt.currY
-    });
-    */
-
-    /*
-    const dliFilter: DragListItem[] = this.dragListWords.filter( (item) => {
-      return item.id > evt.id && item.parentLine === evt.currParentLine;
-    });
-    */
-
     const dliFilter: DragListItem[] = this.getWordsFromGroup(evt.id, evt.currParentLine);
 
-    // console.log('items FIltered: ', dliFilter);
     dliFilter.map((item) => {
-      // item.dragPosition.y = evt.currY;
-//      console.log('++++ >>' + item.id + '<< ++++');
       item.notify.valueChanged({
         word: evt.word,
         id: evt.id,
@@ -120,12 +89,6 @@ export class DragListComponent implements OnInit, OnDestroy {
         isLastChild: evt.isLastChild
       });
     });
-
-    // this.updateChild(1234);
   }
-
-  // updateChild(newValue: number) {
-    // this.notify.valueChanged(newValue); // inform child
-  // }
 
 }

@@ -1,5 +1,3 @@
-import { DragListItem } from './drag-list-item.type';
-
 export interface DragWordEvent {
   word: string;
   id: number;

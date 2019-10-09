@@ -11,7 +11,6 @@ export class WordWidthDirective implements AfterViewInit  {
   constructor(private el: ElementRef, private wordFacade: WordFacade) { }
 
   storeWordWidth() {
-    // console.log(this.wordWidthId + ' - ' + this.el.nativeElement.offsetWidth);
     this.wordFacade.saveWordWidthById(this.wordWidthId, this.el.nativeElement.offsetWidth);
   }
 

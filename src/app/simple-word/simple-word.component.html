@@ -5,8 +5,7 @@
   [cdkDragData]="id"
   (cdkDragEnded)="fnDragEnded($event)"
   (cdkDragStarted)="fnDragStarted($event)"
-  (cdkDragReleased)="fnReleased($event)"
   (cdkDragMoved)="fnDragMoved($event)"
   appWordWidth
   [wordWidthId]="id"
-  class="drag-word mono-font">{{word}}<span *ngIf="isLastChild" (click)="removeNextGroup()" class="isLastChild">*</span></span>
+  class="drag-word mono-font">{{word}}<span *ngIf="isLastChild" (click)="removeNextGroup()" class="isLastChild"><mat-icon>backspace</mat-icon></span></span>

@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Point, DragRef } from '@angular/cdk/drag-drop/typings/drag-ref';
-import { CdkDragStart, CdkDragEnd, CdkDragRelease } from '@angular/cdk/drag-drop';
-// import { Observable, Subscription } from 'rxjs';
+import { CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
 
 import { DragListItem, Notifier } from '../types/drag-list-item.type';
 import { DragWordEvent } from '../types/events.type';
-import { JUMP_X_DISTANCE, JUMP_Y_DISTANCE, SPACER_BETWEEN_WORDS } from '../types/constants';
+import { JUMP_X_DISTANCE, JUMP_Y_DISTANCE } from '../types/constants';
 import { WordFacade } from '../state/facades/word.facade';
 import { Subscription } from 'rxjs';
 import { WordWidthItem } from '../types/word-width-item.type';
@@ -21,7 +20,6 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
 
   @Input() notify = new Notifier();
 
-  // @Input() dragWord: DragListItem;
   @Input() id: number;
   @Input() word: string;
   @Input() parentLine: number;
@@ -46,49 +44,14 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
     mainThisComponent[this.id] = this;
 
     this.notify.valueChanged = (wordDrag: DragListItem) => {
-      // console.log(`Parent changes to ${wordDrag.id} -- word: ${this.word}`);
-      // this.dragPosition.x = wordDrag.x;
-      // this.dragPosition.y = wordDrag.y;
-      // console.log(' value changed!!!: ', wordDrag);
-      // this.dragPosition = {x: this.xPos, y: (wordDrag.y - 87)};
-      // this.dragPosition = {x: this.xPos, y: wordDrag.y };
-
-/*
-      let sumWidth = wordDrag.x;
-      const wordWidthSubGroup: WordWidthItem[] = this.wordWidthItems
-                                    .filter(item => item.id >= wordDrag.id && item.id < this.id);
-      if (wordWidthSubGroup.length) {
-        wordWidthSubGroup.map(item => sumWidth += item.width + SPACER_BETWEEN_WORDS);
-      }
-*/
-      // console.log('wordWidthSubGroup: ', wordWidthSubGroup);
-
-      // this.dragPosition = {x: sumWidth, y: wordDrag.y };
       this.dragPosition = {x: wordDrag.x, y: wordDrag.y };
     };
 
-    // this.wordFacade.wordsWidth$.subscribe((data) => {
     this.subscriptions.push(
       this.wordFacade.wordsWidth$.subscribe((data) => {
-        // console.log('>>>> ID: ' , this.id , ' - data: ', data);
         this.wordWidthItems = data;
       })
     );
-
-    // this.dragPosition = {x: this.id * 20, y: 0 };
-
-    /* this.subscription = this.currDragItem$.subscribe((dataItem: DragListItem) => {
-      if (dataItem) {
-        console.log('>>> ', dataItem.word);
-      } else {
-        console.log('dataItem in word component is UNDEFINED');
-      }
-    }); */
-
-  }
-
-  changePosition() {
-    // this.dragPosition = {x: this.dragPosition.x + 50, y: this.dragPosition.y + 50};
   }
 
   ngOnDestroy() {
@@ -99,28 +62,10 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
   fnDragMoved(evt: CdkDragEnd) { }
 
   checkUpdateCurrPos(updateXPos, updateYPos) {
-    /* if (this.currentPosition.x !== updateXPos || this.currentPosition.y !== updateYPos) {
-      this.currentPosition.x = updateXPos;
-      this.currentPosition.y = updateYPos;
-      */
-/*
-    if (this.dragWord.x !== updateXPos || this.dragWord.y !== updateYPos) {
-      this.dragWord.x = updateXPos;
-      this.dragWord.y = updateYPos;
 
-      this.updateWordDrag.emit({
-        word: this.dragWord.word,
-        id: this.dragWord.id,
-        currParentLine: this.dragWord.parentLine,
-        currX: updateXPos,
-        currY: updateYPos
-      });
-*/
     if (this.xPos !== updateXPos || this.yPos !== updateYPos) {
       this.xPos = updateXPos;
       this.yPos = updateYPos;
-
-      // console.log('> Word Pos will emit Updated!');
 
       this.updateWordDrag.emit({
         word: this.word,
@@ -134,33 +79,7 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
     }
   }
 
-  fnReleased(evt: CdkDragRelease): void {
-    // evt.source._dragRef.setFreeDragPosition({ x: 100, y: 100});
-
-  }
-
   fnDragEnded(evt: CdkDragEnd): void {
-    // evt.source._dragRef.setFreeDragPosition(tmpPlusPoint);
-    /*
-    this.endWordDrag.emit({
-      word: this.dragWord.word,
-      id: this.dragWord.id,
-      currParentLine: this.dragWord.parentLine,
-      currX: this.dragWord.x,
-      currY: this.dragWord.y
-    });
-    */
-
-    // ok
-    /*
-    this.updateWordDrag.emit({
-      word: this.word,
-      id: this.id,
-      currParentLine: this.parentLine,
-      currX: this.xPos,
-      currY: this.yPos
-    });
-    */
 
     this.endWordDrag.emit({
       word: this.word,
@@ -174,8 +93,6 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
   }
 
   fnDragStarted(evt: CdkDragStart): void {
-    // evt.source._dragRef.setFreeDragPosition({ x: 100, y: 100});
-    // ok
 
     this.startWordDrag.emit({
       word: this.word,
@@ -186,24 +103,12 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
       isLastChild: this.isLastChild
     });
 
-
-
-    /*
-    this.startWordDrag.emit({
-      word: this.dragWord.word,
-      id: this.dragWord.id,
-      currParentLine: this.dragWord.parentLine,
-      currX: this.dragWord.x,
-      currY: this.dragWord.y
-    });
-    */
   }
 
   constrainPosition(point: Point, dragRef: DragRef): Point {
     const thisAsAny = (this as any);
     const dragRefAsAny = (dragRef as any);
 
-    // console.log('active Drag - transform: ', dragRefAsAny._activeTransform);
     const boundaryRect = thisAsAny._boundaryRect;
 
     const offsetXmouse = thisAsAny._pickupPositionOnPage.x - thisAsAny._previewRect.x;

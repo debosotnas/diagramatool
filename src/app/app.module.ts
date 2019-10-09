@@ -11,6 +11,7 @@ import { SimpleWordComponent } from './simple-word/simple-word.component';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 
 import { reducers } from './state/reducers';
 import { WordWidthDirective } from './directives/word-width.directive';
@@ -28,6 +29,7 @@ import { WordWidthDirective } from './directives/word-width.directive';
     BrowserAnimationsModule,
     DragDropModule,
     MatButtonModule,
+    MatIconModule,
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 10
