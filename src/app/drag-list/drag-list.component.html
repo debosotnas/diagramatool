@@ -1,10 +1,10 @@
 <button mat-raised-button color="primary" (click)="dragPhrase=!dragPhrase">Activate</button>
-<div class="main-drag-container">
+<div class="main-drag-container" id="{{layoutId}}">
   <div cdkDrag [cdkDragDisabled]="dragPhrase" class="full-phrase">
     <app-simple-word 
       *ngFor="let simpleWord of dragListWords"
       [notify]="simpleWord.notify"
-
+      [parentLayoutId]="layoutId"
       [id]="simpleWord.id"
       [word]="simpleWord.word"
       [parentLine]="simpleWord.parentLine"

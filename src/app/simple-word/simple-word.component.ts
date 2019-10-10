@@ -20,6 +20,8 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
 
   @Input() notify = new Notifier();
 
+  @Input() parentLayoutId: string;
+
   @Input() id: number;
   @Input() word: string;
   @Input() parentLine: number;
@@ -37,14 +39,19 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
   subscriptions: Subscription[] = [];
   wordWidthItems: WordWidthItem[];
 
+  rootOffsetPosition: Point = { x: 0, y: 0 };
+
   constructor(private wordFacade: WordFacade) { }
 
   ngOnInit() {
     // fix for loosing bind on 'constrainPosition' and other cdkDrag methods
     mainThisComponent[this.id] = this;
 
+    // sets x and y from parent component
     this.notify.valueChanged = (wordDrag: DragListItem) => {
-      this.dragPosition = {x: wordDrag.x, y: wordDrag.y };
+      this.dragPosition = {x: wordDrag.x + this.rootOffsetPosition.x, y: wordDrag.y + this.rootOffsetPosition.y };
+      this.xPos = this.dragPosition.x;
+      this.yPos = this.dragPosition.y;
     };
 
     this.subscriptions.push(
