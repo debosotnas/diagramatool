@@ -99,8 +99,9 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
 
   }
 
-  fnDragStarted(evt: CdkDragStart): void {
 
+  fnOnMouseDown(evt: any): void {
+    /*
     this.startWordDrag.emit({
       word: this.word,
       id: this.id,
@@ -109,7 +110,25 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
       currY: this.yPos,
       isLastChild: this.isLastChild
     });
+    */
+    console.log('mouse down!!!');
+    this.wordFacade.createParentLineGroup({
+      id: this.id,
+      currParentLine: this.parentLine
+    });
+  }
 
+  fnDragStarted(evt: CdkDragStart): void {
+/*
+    this.startWordDrag.emit({
+      word: this.word,
+      id: this.id,
+      currParentLine: this.parentLine,
+      currX: this.xPos,
+      currY: this.yPos,
+      isLastChild: this.isLastChild
+    });
+*/
   }
 
   constrainPosition(point: Point, dragRef: DragRef): Point {
@@ -144,8 +163,8 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
         word: this.word,
         id: this.id,
         currParentLine: this.parentLine,
-        currX: this.dragPosition.x,
-        currY: this.dragPosition.y,
+        currX: this.dragPosition.x || this.xPos,
+        currY: this.dragPosition.y || this.yPos,
         isLastChild: this.isLastChild
       });
     }, 10);

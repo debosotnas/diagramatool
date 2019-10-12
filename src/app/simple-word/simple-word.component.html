@@ -9,4 +9,4 @@
   appWordWidth
   [wordWidthId]="id"
   id="{{parentLayoutId}}-{{id}}"
-  class="drag-word mono-font">{{word}}<span *ngIf="isLastChild" (click)="removeNextGroup()" class="isLastChild"><mat-icon>backspace</mat-icon></span></span>
+  class="drag-word mono-font"><span (mousedown)="fnOnMouseDown($event)">{{word}}</span><span *ngIf="isLastChild" (click)="removeNextGroup()" class="isLastChild"><mat-icon>backspace</mat-icon></span></span>

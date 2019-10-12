@@ -1,21 +1,23 @@
 <button mat-raised-button color="primary" (click)="dragPhrase=!dragPhrase">Activate</button>
 <div class="main-drag-container" id="{{layoutId}}">
   <div cdkDrag [cdkDragDisabled]="dragPhrase" class="full-phrase">
-    <app-simple-word 
-      *ngFor="let simpleWord of dragListWords"
-      [notify]="simpleWord.notify"
-      [parentLayoutId]="layoutId"
-      [id]="simpleWord.id"
-      [word]="simpleWord.word"
-      [parentLine]="simpleWord.parentLine"
-      [xPos]="simpleWord.x"
-      [yPos]="simpleWord.y"
-      [isLastChild]="simpleWord.isLastChild"
-      [dragPosition]="simpleWord.dragPosition"
-      (startWordDrag)="startWordDragging($event)"
-      (endWordDrag)="endWordDragging($event)"
-      (updateWordDrag)="updateWordDragging($event)"
-      (updateAfterClearGroup)="updateOnClearGroup($event)"
-      ></app-simple-word>
+    <div id="{{layoutIdWords}}" class="widthWordsContainer" [ngStyle]="widthWordsContainer">
+      <app-simple-word 
+        *ngFor="let simpleWord of dragListWords"
+        [notify]="simpleWord.notify"
+        [parentLayoutId]="layoutId"
+        [id]="simpleWord.id"
+        [word]="simpleWord.word"
+        [parentLine]="simpleWord.parentLine"
+        [xPos]="simpleWord.x"
+        [yPos]="simpleWord.y"
+        [isLastChild]="simpleWord.isLastChild"
+        [dragPosition]="simpleWord.dragPosition"
+        (startWordDrag)="startWordDragging($event)"
+        (endWordDrag)="endWordDragging($event)"
+        (updateWordDrag)="updateWordDragging($event)"
+        (updateAfterClearGroup)="updateOnClearGroup($event)"
+        ></app-simple-word>
+    </div>
   </div>
 </div>

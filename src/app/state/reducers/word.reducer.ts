@@ -24,13 +24,14 @@ export function wordsReducer(state: AppWordState = initAppWordState, action: Act
           ]
         };
     case WordActions.CREATE_PARENT_GROUP:
+      const timestampId = +new Date();
       return {
         ...state,
         wordsList: [
           ...state.wordsList.map((w: DragListItem ) => {
             if (w.id >= action.payload.id
               && w.parentLine === action.payload.currParentLine) {
-              w.parentLine = (+new Date());
+              w.parentLine = timestampId;
             }
             return w;
           })
