@@ -131,7 +131,7 @@ export class DragListComponent implements OnInit, OnDestroy {
   }
 
   // adjust words in every line to avoid leave a word out of parent container
-  updateChildsPositionLimit(evt: DragWordEvent, isFirstLoad: boolean = false): void {
+  updateChildsPositionLimit(evt: DragWordEvent, isFirstLoad: boolean = true): void {
     const id = evt.id;
     const parentLine = evt.currParentLine;
 

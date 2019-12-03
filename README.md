@@ -29,3 +29,14 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Extra API Info
 Drag and Drop:
   - https://material.angular.io/cdk/drag-drop/api#CdkDrag
+
+## Pendings / Improvements / Next steps
+  - Check -> VIDEO #3 Observación de estructura literaria - 50:05 min
+    - Leave 'isFirstLoad' as true by default for all new selections (similar to video)
+    - Add SVG arrows, flow elements support
+    - Add highlight support:
+      - Add Enable/Disable click-and-break (help with selection without create new phrase by mistake)
+      - Basic (select and add highlight color) and Advanced (like highlight tool)
+    - Add SAVE feature
+    - Add share portion
+
