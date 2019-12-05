@@ -1,0 +1,39 @@
+{
+  "passage":"Juan 3:14-19",
+  "passageSelection":{
+     "book":"500",
+     "chapter":"3",
+     "verseIni":"14",
+     "verseEnd":"19"
+  },
+  "verses":[
+     {
+        "verse":"13",
+        "full":"<pb\/><J>Porque dio a su Hijo unig\u00e9nito <f>[8]<\/f> <f>\u24e5<\/f>, para condenado <f>[9]<\/f> <f>\u24e9<\/f>; <i>pero<\/i> el"
+     },
+     {
+        "verse":"14",
+        "full":"<J>Y como Mois\u00e9s levant\u00f3 la serpiente en el desierto <f>\u24e1<\/f>, as\u00ed es necesario que sea levantado el Hijo del Hombre <f>\u24e2<\/f>,<\/J>"
+     },
+     {
+        "verse":"15",
+        "full":"<J>para que todo aquel que cree, tenga en El <f>[7]<\/f> vida eterna <f>\u24e3<\/f>.<\/J>"
+     },
+     {
+        "verse":"16",
+        "full":"<pb\/><J>Porque de tal manera am\u00f3 Dios al mundo <f>\u24e4<\/f>, que dio a su Hijo unig\u00e9nito <f>[8]<\/f> <f>\u24e5<\/f>, para que todo aquel que cree en El, no se pierda, mas tenga vida eterna <f>\u24e6<\/f>.<\/J>"
+     },
+     {
+        "verse":"17",
+        "full":"<J>Porque Dios no envi\u00f3 <f>\u24e7<\/f> a su Hijo al mundo para juzgar al mundo, sino para que el mundo sea salvo por El <f>\u24e8<\/f>.<\/J>"
+     },
+     {
+        "verse":"18",
+        "full":"<J>El que cree en El no es condenado <f>[9]<\/f> <f>\u24e9<\/f>; <i>pero<\/i> el que no cree, ya ha sido condenado <f>[10]<\/f>, porque no ha cre\u00eddo en el nombre del unig\u00e9nito <f>[11]<\/f> Hijo de Dios <f>\u24d0<\/f>.<\/J>"
+     },
+     {
+        "verse":"19",
+        "full":"<J>Y este es el juicio: que la luz vino al mundo <f>\u24d1<\/f>, y los hombres amaron m\u00e1s las tinieblas que la luz, pues sus acciones eran malas <f>\u24d2<\/f>.<\/J>"
+     }
+  ]
+}

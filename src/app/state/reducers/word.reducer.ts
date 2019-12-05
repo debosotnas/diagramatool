@@ -81,6 +81,12 @@ export function wordsReducer(state: AppWordState = initAppWordState, action: Act
         };
       }
       return state;
+
+    case WordActions.SET_SHOW_VERSES:
+      return {
+        ...state,
+        showVerses: action.payload
+      };
     default:
       return state;
   }

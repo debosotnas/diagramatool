@@ -17,3 +17,8 @@ export const getWordsList = createSelector(
   getWordsStore,
   (store: AppWordState) => store.wordsList
 );
+
+export const getShowVerses = createSelector(
+  getWordsStore,
+  (store: AppWordState) => store.showVerses
+);

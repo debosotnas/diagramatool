@@ -40,3 +40,12 @@ Drag and Drop:
     - Add SAVE feature
     - Add share portion
 
+
+## Known Issues:
+  - Al arrastrar una porcion de más de una línea, el texto deja de ser un bloque y se transforma en una única línea.
+      - Esperado: al mover un bloque, que se siga adaptando al superar el borde de la derecha
+
+  - Al borrar una separación (click en el iconito al final de un bloque), el texto que se une, no se reacomoda 
+    correctamente
+      - Esperado: el texto que vuelve a ser parte de un bloque, debe recalcular la posición de cada palabra.
+

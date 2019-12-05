@@ -1,2 +1,10 @@
-<app-drag-list [text]="text"></app-drag-list>
+<div *ngIf="isLoadingView" class="loading-wrapper"></div>
+<div class="header-actions">
+  <app-portion-selector class="margin-btn" [isMainSelector]="true" (passageSelected)="onSelectedPassage($event)" [txtLabel]="'Cargar pasaje:'"></app-portion-selector>
+</div>
+<div class="title-curr-passage">{{currPassage}}</div>
+<app-drag-list *ngIf="isVerseTextLoaded"></app-drag-list>
+<div *ngIf="!isVerseTextLoaded" class="no-loaded-verse-yet">
+  Para iniciar, carga un pasaje haciendo click en el botón "Cargar Pasaje"
+</div>
 <router-outlet></router-outlet>

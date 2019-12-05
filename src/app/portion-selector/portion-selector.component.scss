@@ -1,0 +1,114 @@
+// -- select and button to open modal selector
+.selection-description {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.search-controls-block {
+
+  // margin: 3px 6px;
+  display: inline-block;
+
+  .plus-sign {
+    vertical-align: middle;
+    font-size: 29px;
+    margin-top: -3px;
+    margin-right: 4px;
+    display: inline-block;    
+  }
+
+  .btn-main-selector {
+    width: 120px;
+    border: 1px solid #5f0;
+  }
+
+  .btn-no-main-selector {
+    background-color: #aae41f;
+    color: #333;
+    font-size: 1em;
+    font-weight: 400;
+  }
+
+  .book-selected {
+    vertical-align: middle;
+    font-size: 14px;
+    width: 140px;
+    height: 23px;
+  }
+
+}
+
+.search-controls-block.from-main-app {
+  display: block;
+
+}
+
+// -- select verses modal
+.list-of-books {
+  select {
+    margin-left: 10px;
+  }
+  margin-bottom: 10px;
+}
+.list-of-chapters {
+
+  .chapters {
+
+    .chapter {
+      margin: 2px 4px;
+      font-size: 12px;
+    }
+
+  }
+
+  .verses {
+
+    .extra-info {
+      color: #888;
+      font-size: 15px;
+    }
+
+    .verse {
+      margin: 2px 4px;
+      font-size: 12px;
+    }
+  }
+}
+
+.desde-hasta-container {
+  padding-left: 15px;
+}
+
+.select-chapter-container {
+  margin: 15px 0;
+}
+
+.menu-portion-opt button{
+  cursor: pointer;
+}
+.menu-portion-opt button mat-icon {
+  vertical-align: middle;
+}
+.menu-portion-opt button mat-icon.from-top {
+  transform: rotate(180deg);
+  color: #c78723;
+}
+.menu-portion-opt button mat-icon.from-bottom {
+  color: #2196d0
+}
+
+.modal-footer {
+  position: relative;
+
+  .opt-verses {
+    position: absolute;
+    top: 17px;
+    left: 17px;
+
+    input {
+      margin-right: 5px;
+      height: 16px;
+    }
+  }
+}

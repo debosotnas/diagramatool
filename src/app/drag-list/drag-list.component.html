@@ -1,5 +1,5 @@
-<button mat-raised-button color="primary" (click)="dragPhrase=!dragPhrase">Activate</button>
-<div class="main-drag-container" id="{{layoutId}}">
+<!-- <button mat-raised-button color="primary" (click)="dragPhrase=!dragPhrase">Activate</button> -->
+<div class="main-drag-container" id="{{layoutId}}" [style.height.px]="dragContainerHeight">
   <div cdkDrag [cdkDragDisabled]="dragPhrase" class="full-phrase">
     <div id="{{layoutIdWords}}" class="widthWordsContainer" [ngStyle]="widthWordsContainer">
       <app-simple-word 
@@ -20,4 +20,11 @@
         ></app-simple-word>
     </div>
   </div>
+</div>
+<div class="main-drag-container-options">
+  <!-- <span class="opt-verses">
+    <input id="optShowVerses" type="checkbox" (click)="checkUncheckShowVerses($event)" /> <label for="optShowVerses"> Mostrar vers&iacute;culos</label>
+  </span> -->
+  <button *ngIf="dragContainerHeight > 500" mat-raised-button color="accent" (click)="updateDragContainerHeight()">⇧</button>
+  <button mat-raised-button color="accent" (click)="updateDragContainerHeight('add')">⇩</button>
 </div>

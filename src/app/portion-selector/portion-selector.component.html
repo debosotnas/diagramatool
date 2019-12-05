@@ -1,0 +1,107 @@
+<div class="search-controls-block" [ngClass]="{'from-main-app': isMainSelector}">
+  <!-- <span class="selection-description">{{txtLabel}}</span> -->
+  
+
+  <!-- <span *ngIf="isMainSelector" class="plus-sign">⊕</span> -->
+  <!-- <select class="book-selected" [(ngModel)]="bookselected" (ngModelChange)="onChangeBook()">
+    <option *ngFor="let item of listBooks" [selected]="bookselected == item.val" [value]="item.val">{{item.name}}</option>
+  </select> -->
+
+  <button *ngIf="isMainSelector" mat-stroked-button color="accent" [ngClass]="{'btn-no-main-selector': !isMainSelector, 'btn-main-selector': isMainSelector}"
+    (click)="openSelection(passageContent)">{{currentLabelBookVersesButton}}</button>
+
+  <div *ngIf="!isMainSelector" ngbDropdown class="d-inline-block menu-portion-opt">
+    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{currentLabelBookVersesButton}}</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button (click)="openSelection(passageContent)" ngbDropdownItem><mat-icon>360</mat-icon> Cambiar pasaje</button>
+      <div class="dropdown-divider"></div>
+      <button ngbDropdownItem><mat-icon class="from-top">playlist_add</mat-icon> Agregar versículo al Principio</button>
+      <button ngbDropdownItem><mat-icon class="from-top">playlist_play</mat-icon> Quitar versículo del Principio</button>
+      <button ngbDropdownItem><mat-icon class="from-bottom">playlist_add</mat-icon> Agregar versículo al Final</button>
+      <button ngbDropdownItem><mat-icon class="from-bottom">playlist_play</mat-icon> Quitar versículo del Final</button>
+      <div class="dropdown-divider"></div>
+      <button (click)="onRemovePassage()" ngbDropdownItem><mat-icon>delete_forever</mat-icon> Eliminar</button>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #passageContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Seleccionar pasaje a cargar</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div class="list-of-books">
+        <b>Libro:</b>
+        <select class="book-selected" [(ngModel)]="bookselected" (ngModelChange)="onChangeBook()">
+          <option *ngFor="let item of listBooks" [selected]="bookselected == item.val" [value]="item.val">{{item.name}}</option>
+        </select>
+      </div>
+
+      <!-- Version DESKTOP with buttons START -->
+      <div class="list-of-chapters d-none d-md-block">
+        <b>Capítulos:</b>
+        <div class="chapters">
+          <button [ngClass]="{'btn-outline-info': currentChapterHighlight != chapterSelected, 'btn-info': currentChapterHighlight == chapterSelected}"
+                *ngFor="let chapterSelected of objectKeys(currentBookVersesSelection)"
+                (click)="showVersesOfChapter(currentBookVersesSelection[chapterSelected], chapterSelected)"
+                class="btn chapter">{{chapterSelected}}</button>
+        </div>
+        <hr />
+        <div *ngIf="currentVerses" class="verses">
+          <b>Versículos:</b> <span class="extra-info"> (<b>Click</b> para seleccionar un versículo. <b>Arrastrar</b> para seleccionar dos o más versículos)</span>
+          <div>
+            <button [ngClass]="{'btn-outline-info': !currentVerseHighlight[i+1], 'btn-info': currentVerseHighlight[i+1]}"
+                  *ngFor="let item of arrayOne(currentVerses); let i = index;"
+                  (mousedown)="selectIniVerses(i+1)"
+                  (mouseover)="showDragButtons(i+1)"
+                  (mouseup)="selectEndVerses(i+1)"
+                  class="btn verse">{{i+1}}</button>
+          </div>
+        </div>
+      </div>
+      <!-- Version DESKTOP with buttons END -->
+
+
+      <!-- Version MOBILE with selects START -->
+      <div class="list-of-chapters select-chapter-container d-md-none" *ngIf="capselected">
+        <b>Capítulo:</b>&nbsp; 
+        <select class="book-selected" [(ngModel)]="capselected" (ngModelChange)="onChangeCap()">
+          <option *ngFor="let chapterSelected of objectKeys(currentBookVersesSelection)" [selected]="capselected == chapterSelected" [value]="chapterSelected">{{chapterSelected}}</option>
+        </select>
+      </div>
+
+      <div class="list-of-chapters d-md-none" *ngIf="verseIniSelected && verseEndSelected">
+        <b>Versículos:</b>
+        <br />
+        <div class="desde-hasta-container">
+          <b>desde:</b>&nbsp; 
+          <select class="book-selected" [(ngModel)]="verseIniSelected" (ngModelChange)="onChangeVerseIni()">
+            <option *ngFor="let item of arrayOne(currentVerses); let i = index;" [value]="i+1">{{i+1}}</option>
+          </select>
+          ->
+          <b>hasta:</b>&nbsp; 
+          <select class="book-selected" [(ngModel)]="verseEndSelected" (ngModelChange)="onChangeVerseEnd()">
+            <option *ngFor="let item of arrayOne(currentVerses); let i = index;" [value]="i+1">{{i+1}}</option>
+          </select>
+        </div>
+      </div>
+      <!-- Version MOBILE with selects END -->
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <span class="opt-verses">
+      <input id="optShowVerses" type="checkbox" (click)="checkUncheckShowVerses($event)" /> <label for="optShowVerses"> Mostrar vers&iacute;culos al cargar</label>
+    </span>
+    <button type="button" class="btn btn-outline-dark" (click)="cancelLoadPortion(); modal.close()">Cancelar</button>
+    <button type="button"
+        class="btn btn-success"
+        (click)="updateAndLoadPortion(); modal.close()"
+        [disabled]="!currentPortionToBeLoaded">Cargar pasaje</button>
+  </div>
+</ng-template>

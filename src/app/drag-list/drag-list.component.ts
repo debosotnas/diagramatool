@@ -14,8 +14,6 @@ import { Point } from '@angular/cdk/drag-drop/typings/drag-ref';
 })
 export class DragListComponent implements OnInit, OnDestroy {
 
-  @Input() text: string;
-
   subscriptions: Subscription[] = [];
 
   allWords: string[];
@@ -27,32 +25,18 @@ export class DragListComponent implements OnInit, OnDestroy {
   layoutIdWords = `${this.layoutId}-words`;
   widthWordsContainer = null;
 
+  dragContainerHeight = 500;
+
   constructor(private wordFacade: WordFacade) { }
 
   ngOnInit() {
-    this.allWords = this.text.split(' ');
-    let localId = 1;
-
-    const initListWords: DragListItem[] = this.allWords.map(w => {
-      return {
-        id: localId++,
-        word: w,
-        parentLine: 1,
-        x: 0,
-        y: 0,
-        dragPosition: { x: 0, y: 0 },
-        notify: new Notifier(),
-        isLastChild: false
-      };
-    });
-
     this.subscriptions.push(
       this.wordFacade.wordsList$.subscribe((data) => {
         this.dragListWords = data;
       }),
       this.wordFacade.wordsWidth$.subscribe((data) => {
         this.wordsWidthList = data;
-        if (this.wordsWidthList.length === this.allWords.length) {
+        if (this.wordsWidthList && this.allWords && this.wordsWidthList.length === this.allWords.length) {
           const sumWidths = this.wordsWidthList.reduce((prev, next, index) => {
               return prev +
                   ((index === this.wordsWidthList.length - 1) ?
@@ -78,7 +62,24 @@ export class DragListComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
 
+  processNewText(newFullText: string) {
+    this.allWords = newFullText.split(' ');
+    let localId = 1;
+
+    const initListWords: DragListItem[] = this.allWords.map(w => {
+      return {
+        id: localId++,
+        word: w,
+        parentLine: 1,
+        x: 0,
+        y: 0,
+        dragPosition: { x: 0, y: 0 },
+        notify: new Notifier(),
+        isLastChild: false
+      };
+    });
 
     this.wordFacade.updateWordList(initListWords);
   }
@@ -104,6 +105,11 @@ export class DragListComponent implements OnInit, OnDestroy {
   updateOnClearGroup(evt: DragWordEvent): void {
     this.updateWordDragging(evt, true);
     this.updateChildsPositionLimit(evt);
+
+    // >>>>!!! update
+    // setTimeout(() => {
+    //   this.updateChildsPositionLimit(evt);
+    // }, 100);
   }
 
   getWordsFromGroup(id: number, parentLine: number): DragListItem[] {
@@ -207,5 +213,26 @@ export class DragListComponent implements OnInit, OnDestroy {
       prevWordPos = currWordBound;
     });
   }
+
+  updateDragContainerHeight(action: string = 'rem') {
+    if (this.dragContainerHeight < 500) {
+      return;
+    }
+    this.dragContainerHeight =
+      action === 'rem' ?
+        this.dragContainerHeight - 100 :
+        this.dragContainerHeight + 100;
+  }
+
+  // not used for now
+  // checkUncheckShowVerses(evt: any) {
+  //   // console.log('>> ', evt.srcElement.checked);
+  //   this.wordFacade.setShowVerses(evt.srcElement.checked);
+  //   const tmp: DragListItem[] = [...this.dragListWords];
+  //   this.dragListWords = [];
+  //   setTimeout(() => {
+  //     this.dragListWords = tmp;
+  //   }, 700);
+  // }
 
 }

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,15 +16,22 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { reducers } from './state/reducers';
 import { WordWidthDirective } from './directives/word-width.directive';
+import { PortionSelectorComponent } from './portion-selector/portion-selector.component';
+import { FormsModule } from '@angular/forms';
+
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     DragListComponent,
     SimpleWordComponent,
-    WordWidthDirective
+    WordWidthDirective,
+    PortionSelectorComponent
   ],
   imports: [
+    HttpClientModule,
+    NgbModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -33,7 +41,8 @@ import { WordWidthDirective } from './directives/word-width.directive';
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({
       maxAge: 10
-    })
+    }),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -41,9 +41,14 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
 
   rootOffsetPosition: Point = { x: 0, y: 0 };
 
+  showVerses$ = this.wordFacade.showVerses$;
+
   constructor(private wordFacade: WordFacade) { }
 
   ngOnInit() {
+    // *************** PENDING UPDATE
+    // code to show/hide verses: <span *ngIf="showVerses$ | async">VV </span>
+
     // fix for loosing bind on 'constrainPosition' and other cdkDrag methods
     mainThisComponent[this.id] = this;
 
@@ -71,6 +76,7 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
   checkUpdateCurrPos(updateXPos, updateYPos) {
 
     if (this.xPos !== updateXPos || this.yPos !== updateYPos) {
+      console.log('>>>> !!!! checkUpdateCurrPos!');
       this.xPos = updateXPos;
       this.yPos = updateYPos;
 
