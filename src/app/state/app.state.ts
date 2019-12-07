@@ -6,11 +6,13 @@ export interface AppWordState {
   wordWidthList: WordWidthItem[];
   showVerses: boolean;
   wordsList?: DragListItem[];
+  timePersisted: number;
 }
 
 export const initAppWordState: AppWordState = {
   currDragItem: null,
   wordWidthList: [{ id: 0, width: 0 }],
   showVerses: true,
-  wordsList: []
+  wordsList: [],
+  timePersisted: 0
 };

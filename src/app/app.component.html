@@ -1,10 +1,45 @@
 <div *ngIf="isLoadingView" class="loading-wrapper"></div>
 <div class="header-actions">
+  <button
+    *ngIf="isVerseTextLoaded"
+    class="save-diagram-button"
+    mat-raised-button color="accent"
+    (click)="downloadPortion()"
+  >💾 Descargar Diagrama</button>
+  <button
+    class="load-diagram-button"
+    mat-raised-button color="accent"
+    (click)="open(modalFileUpload)"
+  >📁 Cargar Diagrama</button>
   <app-portion-selector class="margin-btn" [isMainSelector]="true" (passageSelected)="onSelectedPassage($event)" [txtLabel]="'Cargar pasaje:'"></app-portion-selector>
 </div>
 <div class="title-curr-passage">{{currPassage}}</div>
 <app-drag-list *ngIf="isVerseTextLoaded"></app-drag-list>
 <div *ngIf="!isVerseTextLoaded" class="no-loaded-verse-yet">
-  Para iniciar, carga un pasaje haciendo click en el botón "Cargar Pasaje"
+  Para iniciar un nuevo Diagrama, haz clic en el botón "Cargar Pasaje".
+  <br />
+  Para continuar trabajando en un Diagrama previamente descargado, haz clic en el botón "Cargar Diagrama".
 </div>
 <router-outlet></router-outlet>
+
+<ng-template #modalFileUpload let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Abrir Pasaje</h4>
+      <button type="button" class="close" aria-label="Cerrar" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="dateOfBirth">Seleccione un archivo descargado previamente para continuar trabajando</label>
+          <div class="input-group">
+            <input type='file' accept='text/plain' (change)='openIOTFile($event)'>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cerrar</button>
+    </div>
+</ng-template>

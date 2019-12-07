@@ -5,7 +5,7 @@ import { DragListItem } from 'src/app/types/drag-list-item.type';
 export type Action = WordActions.All;
 
 export function wordsReducer(state: AppWordState = initAppWordState, action: Action) {
-  console.log (action.type, state);
+  // console.log (action.type, state);
 
   switch (action.type) {
     case WordActions.UPDATE_WORD_LIST:
@@ -82,6 +82,11 @@ export function wordsReducer(state: AppWordState = initAppWordState, action: Act
       }
       return state;
 
+    case WordActions.UPDATE_TIME_PERSIST:
+      return {
+        ...state,
+        timePersisted: action.payload
+      };
     case WordActions.SET_SHOW_VERSES:
       return {
         ...state,

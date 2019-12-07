@@ -7,6 +7,7 @@ export const SAVE_WORD_WIDTH = '[Word] Save width';
 export const CREATE_PARENT_GROUP = '[Word] Create parent group';
 export const SET_LAST_CHILD_GROUP = '[Word] Set last child in group';
 export const CLEAR_LAST_CHILD_GROUP = '[Word] Clear last child in group';
+export const UPDATE_TIME_PERSIST = '[Word] Update time persist';
 export const SET_SHOW_VERSES = '[Word] Set Show verses';
 
 export class UpdateWordList implements Action {
@@ -39,6 +40,12 @@ export class ClearLastChildGroup implements Action {
   constructor(public payload: number) {}
 }
 
+export class UpdateTimestampPersist implements Action {
+  readonly type = UPDATE_TIME_PERSIST;
+
+  constructor(public payload: number) {}
+}
+
 export class SetShowVerses implements Action {
   readonly type = SET_SHOW_VERSES;
 
@@ -51,4 +58,5 @@ UpdateWordList
 | CreateParentGroup
 | SetLastChildGroup
 | ClearLastChildGroup
-| SetShowVerses;
+| SetShowVerses
+| UpdateTimestampPersist;

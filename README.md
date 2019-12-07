@@ -30,6 +30,10 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Drag and Drop:
   - https://material.angular.io/cdk/drag-drop/api#CdkDrag
 
+File-saver
+  - https://www.npmjs.com/package/file-saver
+    Installation: npm install file-saver --save
+
 ## Pendings / Improvements / Next steps
   - Check -> VIDEO #3 Observación de estructura literaria - 50:05 min
     - Leave 'isFirstLoad' as true by default for all new selections (similar to video)
@@ -37,8 +41,8 @@ Drag and Drop:
     - Add highlight support:
       - Add Enable/Disable click-and-break (help with selection without create new phrase by mistake)
       - Basic (select and add highlight color) and Advanced (like highlight tool)
-    - Add SAVE feature
-    - Add share portion
+    - Add SAVE feature - Completed!
+    - Add share portion ::: Won't be implemented
 
 
 ## Known Issues:

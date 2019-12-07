@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,8 @@ import { MatButtonModule } from '@angular/material';
 import { MatIconModule } from '@angular/material/icon';
 
 import { reducers } from './state/reducers';
+import { WordEffects } from './state/effects/word.effects';
+
 import { WordWidthDirective } from './directives/word-width.directive';
 import { PortionSelectorComponent } from './portion-selector/portion-selector.component';
 import { FormsModule } from '@angular/forms';
@@ -39,6 +42,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     MatButtonModule,
     MatIconModule,
     StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([WordEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 10
     }),

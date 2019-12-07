@@ -76,7 +76,7 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
   checkUpdateCurrPos(updateXPos, updateYPos) {
 
     if (this.xPos !== updateXPos || this.yPos !== updateYPos) {
-      console.log('>>>> !!!! checkUpdateCurrPos!');
+      // console.log('>>>> !!!! checkUpdateCurrPos!');
       this.xPos = updateXPos;
       this.yPos = updateYPos;
 
@@ -117,7 +117,7 @@ export class SimpleWordComponent implements OnInit, OnDestroy  {
       isLastChild: this.isLastChild
     });
     */
-    console.log('mouse down!!!');
+    // console.log('mouse down!!!');
     this.wordFacade.createParentLineGroup({
       id: this.id,
       currParentLine: this.parentLine

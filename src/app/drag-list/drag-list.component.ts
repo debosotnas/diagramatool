@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { DragListItem, Notifier } from '../types/drag-list-item.type';
 import { DragWordEvent } from '../types/events.type';
 import { WordFacade } from '../state/facades/word.facade';
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { WordWidthItem } from '../types/word-width-item.type';
 import { JUMP_X_DISTANCE, JUMP_Y_DISTANCE, MAX_WIDTH_SUB_WORD_CONTAINER } from '../types/constants';
 import { Point } from '@angular/cdk/drag-drop/typings/drag-ref';
+import { SimpleWordComponent } from '../simple-word/simple-word.component';
 
 @Component({
   selector: 'app-drag-list',
@@ -26,6 +27,9 @@ export class DragListComponent implements OnInit, OnDestroy {
   widthWordsContainer = null;
 
   dragContainerHeight = 500;
+
+  @ViewChildren(SimpleWordComponent)
+  wordsList: QueryList<SimpleWordComponent>;
 
   constructor(private wordFacade: WordFacade) { }
 
@@ -234,5 +238,22 @@ export class DragListComponent implements OnInit, OnDestroy {
   //     this.dragListWords = tmp;
   //   }, 700);
   // }
+
+  getAllWordsDragComponent() {
+    return this.wordsList;
+  }
+
+  setAllWordsDragPositions(xyPos: any) {
+    let iPos = 0;
+    this.wordsList.forEach(word => {
+      word.xPos = xyPos[iPos].xPos;
+      word.yPos = xyPos[iPos].yPos;
+      word.dragPosition = {
+        x: xyPos[iPos].xPos,
+        y: xyPos[iPos].yPos
+      };
+      iPos++;
+    });
+  }
 
 }

@@ -5,7 +5,7 @@ import { BooksWithChapters, versesByChaptersBook } from './portion-selector-cons
 import { PassageSelection, TextPortionSelected } from '../common/verse';
 
 const DEFAULT_BOOK_TO_LOAD = 470;
-const DEFAULT_LABEL_BUTTON = 'Cargar Pasaje';
+const DEFAULT_LABEL_BUTTON = 'Abrir Pasaje';
 
 @Component({
   selector: 'app-portion-selector',

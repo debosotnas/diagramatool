@@ -18,6 +18,11 @@ export const getWordsList = createSelector(
   (store: AppWordState) => store.wordsList
 );
 
+export const getUpdateToPersist = createSelector(
+  getWordsStore,
+  (store: AppWordState) => store.timePersisted
+);
+
 export const getShowVerses = createSelector(
   getWordsStore,
   (store: AppWordState) => store.showVerses
